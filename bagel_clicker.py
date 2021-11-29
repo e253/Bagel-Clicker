@@ -26,17 +26,28 @@ def reset_speeds():
 reset_speeds()
 ticks = 0
 bagel_score = 0
-
+mouse_on = False
+average_speed = 0
+total_speed = 0
 
 def tick(keys):
-
+    global average_speed
+    global total_speed
+    global mouse_on
     global bagel_score
+    
     # User interaction
-    if (bagel.x - 20, bagel.y - 15) < (camera.mousex, camera.mousey) < (bagel.x + 20, bagel.y + 15) and camera.mouseclick:
+    if not camera.mouseclick:
+        mouse_on = False
+    if (bagel.x - 20, bagel.y - 15) < (camera.mousex, camera.mousey) < (bagel.x + 20, bagel.y + 15) and camera.mouseclick and not mouse_on:
         bagel_score += 1
+        mouse_on = True
     
     # Resets Speeds every 2 seconds
     if ticks % 60:
+        average_speed = two_total/60
+        if average_speed <= 10:
+            reset_speeds()
         reset_speeds()
 
     # Side Interactions
@@ -53,7 +64,8 @@ def tick(keys):
     if bagel.y < -2 or bagel.y > 602:
         bagel.x = 300
 
-    
+    # Make sure it moves fast
+    total_speed += (bagel.speedx ** 2 + bagel.speedy ** 2) ** .5
 
     # Move Bagel Around
     bagel.x += bagel.speedx
