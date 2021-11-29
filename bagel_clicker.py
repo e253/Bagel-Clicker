@@ -7,20 +7,34 @@ camera = gamebox.Camera(800,600)
 # Bagel
 bagel = gamebox.from_image(400, 300, "bagel.png")
 bagel.size = [20,15]
+# Score
+score = gamebox.from_text(45, 15 , 'Score: 0', 25, 'red', bold=True)
 # Borders
 bottom = gamebox.from_color(400, 601, "white", 800, 1)
 top = gamebox.from_color(400, -1, "white", 800, 1)
 left = gamebox.from_color(-1, 300, "white", 1, 600)
 right = gamebox.from_color(801, 300, 'white', 1, 600)
 
+
+# Helpers
 def reset_speeds():
     bagel.speedx = random.randrange(-20, 20, 5)
     bagel.speedy = random.randrange(-20, 20, 5)
     
-reset_speeds()
 
+# Startup
+reset_speeds()
 ticks = 0
+bagel_score = 0
+
+
 def tick(keys):
+
+    global bagel_score
+    # User interaction
+    if (bagel.x - 20, bagel.y - 15) < (camera.mousex, camera.mousey) < (bagel.x + 20, bagel.y + 15) and camera.mouseclick:
+        bagel_score += 1
+    
     # Resets Speeds every 2 seconds
     if ticks % 60:
         reset_speeds()
@@ -46,6 +60,8 @@ def tick(keys):
     bagel.y += bagel.speedy
 
     camera.clear('black')
+    keys.clear()
+    camera.draw(gamebox.from_text(45, 15 , 'Score: {}'.format(bagel_score), 25, 'red', bold=True))
     camera.draw(bagel)
     camera.display()
 
