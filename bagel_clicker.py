@@ -4,6 +4,10 @@ import random
 
 camera = gamebox.Camera(800,600)
 
+
+# Kitchen Background
+background = gamebox.from_image(400, 300, "kitchen-background.png")
+background.size = [800, 600]
 # Bagel
 bagel = gamebox.from_image(400, 300, "bagel.png")
 bagel.size = [20,15]
@@ -66,6 +70,7 @@ def tick(keys):
     bagel.y += bagel.speedy
 
     camera.clear('black')
+    camera.draw(background)
     keys.clear()
     camera.draw(gamebox.from_text(45, 15 , 'Score: {}'.format(bagel_score), 25, 'red', bold=True))
     camera.draw(bagel)
