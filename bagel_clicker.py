@@ -35,14 +35,16 @@ def tick(keys):
     global total_speed
     global mouse_on
     global bagel_score
-    
+
     # User interaction
     if not camera.mouseclick:
         mouse_on = False
+        bagel.size = [20,15]
     if (bagel.x - 20, bagel.y - 15) < (camera.mousex, camera.mousey) < (bagel.x + 20, bagel.y + 15) and camera.mouseclick and not mouse_on:
         bagel_score += 1
+        bagel.size = [40, 30]
         mouse_on = True
-    
+
     # Resets Speeds every 2 seconds
     if ticks % 60:
         average_speed = two_total/60
