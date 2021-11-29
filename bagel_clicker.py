@@ -13,21 +13,32 @@ top = gamebox.from_color(400, -1, "white", 800, 1)
 left = gamebox.from_color(-1, 300, "white", 1, 600)
 right = gamebox.from_color(801, 300, 'white', 1, 600)
 
-
-bagel.speedx = random.randrange(-10, 10)
-bagel.speedy = random.randrange(-10, 10)
+def reset_speeds():
+    bagel.speedx = random.randrange(-20, 20, 5)
+    bagel.speedy = random.randrange(-20, 20, 5)
     
-
+reset_speeds()
 
 ticks = 0
 def tick(keys):
-
+    # Resets Speeds every 2 seconds
+    if ticks % 60:
+        reset_speeds()
 
     # Side Interactions
     if bagel.touches(bottom) or bagel.touches(top):
         bagel.speedy *= -1
+        bagel.speedx  = random.randrange(-20, 20, 5)
     if bagel.touches(left) or bagel.touches(right):
         bagel.speedx *= -1
+        bagel.speedx  = random.randrange(-20, 20, 5)
+    
+    # If it glitches out of the window
+    if bagel.x < -2 or bagel.x > 802:
+        bagel.x = 400
+    if bagel.y < -2 or bagel.y > 602:
+        bagel.x = 300
+
     
 
     # Move Bagel Around
