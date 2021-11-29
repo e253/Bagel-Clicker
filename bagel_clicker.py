@@ -27,12 +27,9 @@ reset_speeds()
 ticks = 0
 bagel_score = 0
 mouse_on = False
-average_speed = 0
-total_speed = 0
+
 
 def tick(keys):
-    global average_speed
-    global total_speed
     global mouse_on
     global bagel_score
 
@@ -48,8 +45,6 @@ def tick(keys):
     # Resets Speeds every 2 seconds
     if ticks % 60:
         average_speed = two_total/60
-        if average_speed <= 10:
-            reset_speeds()
         reset_speeds()
 
     # Side Interactions
@@ -65,9 +60,6 @@ def tick(keys):
         bagel.x = 400
     if bagel.y < -2 or bagel.y > 602:
         bagel.x = 300
-
-    # Make sure it moves fast
-    total_speed += (bagel.speedx ** 2 + bagel.speedy ** 2) ** .5
 
     # Move Bagel Around
     bagel.x += bagel.speedx
