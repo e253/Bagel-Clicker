@@ -20,8 +20,13 @@ bagel.speedy = random.randrange(-10, 10)
 
 
 ticks = 0
-def tick(keys):
+bagel_score = 0
 
+def tick(keys):
+    global bagel_score
+    # User interaction
+    if (bagel.x - 20, bagel.y - 15) < (camera.mousex, camera.mousey) < (bagel.x + 20, bagel.y + 15) and camera.mouseclick:
+        bagel_score += 1
 
     # Side Interactions
     if bagel.touches(bottom) or bagel.touches(top):
