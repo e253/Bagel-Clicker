@@ -44,50 +44,72 @@ reset_speeds()
 ticks = 0
 bagel_score = 0
 mouse_on = False
+start = False
+game_over = False
 
 
 def tick(keys):
     global mouse_on
     global bagel_score
-
-    # User interaction
-    if not camera.mouseclick:
-        mouse_on = False
-        bagel.size = [20,15]
-    if (bagel.x - 20, bagel.y - 15) < (camera.mousex, camera.mousey) < (bagel.x + 20, bagel.y + 15) and camera.mouseclick and not mouse_on:
-        bagel_score += 1
-        bagel.size = [40, 30]
-        mouse_on = True
-
-    # Resets Speeds every 2 seconds
-    if ticks % 60:
-        average_speed = two_total/60
-        reset_speeds()
-
-    # Side Interactions
-    if bagel.touches(bottom) or bagel.touches(top):
-        bagel.speedy *= -1
-        bagel.speedx  = random.randrange(-20, 20, 5)
-    if bagel.touches(left) or bagel.touches(right):
-        bagel.speedx *= -1
-        bagel.speedx  = random.randrange(-20, 20, 5)
+    global start
+    global game_over
     
-    # If it glitches out of the window
-    if bagel.x < -2 or bagel.x > 802:
-        bagel.x = 400
-    if bagel.y < -2 or bagel.y > 602:
-        bagel.x = 300
+    # Start screen
+    if not start: 
+        camera.clear('black')
+        title = gamebox.from_text(400, 100, "Bagel Clicker", 72, "blue")
+        instruction_header = gamebox.from_text(400, 300, "Instructions:", 40, "red")
+        purpose = gamebox.from_text(400, 350, "Bodo's needs help finishing all their catering orders!", 20, "red")
+        instructions = gamebox.from_text(400, 400, "Click on the moving bagel to make a bagel, and make as many as needed before the time runs out.", 20, "red")
+        start_text = gamebox.from_text(400, 500, "Press Space to start", 50, "blue")
+        camera.draw(title)
+        camera.draw(instruction_header)
+        camera.draw(purpose)
+        camera.draw(instructions)
+        camera.draw(start_text)
+        camera.display()
+        if pygame.K_SPACE in keys:
+            start = True
+            
+    if start: 
+        # User interaction
+        if not camera.mouseclick:
+            mouse_on = False
+            bagel.size = [20,15]
+        if (bagel.x - 20, bagel.y - 15) < (camera.mousex, camera.mousey) < (bagel.x + 20, bagel.y + 15) and camera.mouseclick and not mouse_on:
+            bagel_score += 1
+            bagel.size = [40, 30]
+            mouse_on = True
 
-    # Move Bagel Around
-    bagel.x += bagel.speedx
-    bagel.y += bagel.speedy
+        # Resets Speeds every 2 seconds
+        if ticks % 60:
+            average_speed = two_total/60
+            reset_speeds()
 
-    camera.clear('black')
-    camera.draw(background)
-    keys.clear()
-    camera.draw(gamebox.from_text(45, 15 , 'Score: {}'.format(bagel_score), 25, 'red', bold=True))
-    camera.draw(bagel)
-    camera.display()
+        # Side Interactions
+        if bagel.touches(bottom) or bagel.touches(top):
+            bagel.speedy *= -1
+            bagel.speedx  = random.randrange(-20, 20, 5)
+        if bagel.touches(left) or bagel.touches(right):
+            bagel.speedx *= -1
+            bagel.speedx  = random.randrange(-20, 20, 5)
+    
+        # If it glitches out of the window
+        if bagel.x < -2 or bagel.x > 802:
+            bagel.x = 400
+        if bagel.y < -2 or bagel.y > 602:
+            bagel.x = 300
+
+        # Move Bagel Around
+        bagel.x += bagel.speedx
+        bagel.y += bagel.speedy
+
+        camera.clear('black')
+        camera.draw(background)
+        keys.clear()
+        camera.draw(gamebox.from_text(45, 15 , 'Score: {}'.format(bagel_score), 25, 'red', bold=True))
+        camera.draw(bagel)
+        camera.display()
 
 
 
