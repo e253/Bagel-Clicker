@@ -142,43 +142,16 @@ def tick(keys):
             camera.draw(timer)
 
     # Game Over or Level Complete
-            if Level == 1:
+            if Level < 7:
                 if time == 0 and bagel_score < have_to_make:
                     game_over_function()
                 elif bagel_score >= have_to_make and time >= 0:
                     game_over = True
                     camera.draw(level_complete)
                     camera.draw(level_complete_instructions)
-                    Level = 2
-                    have_to_make = 10
-            if Level == 2:
-                if time == 0 and bagel_score < have_to_make:
-                    game_over_function()
-                elif bagel_score >= have_to_make and time >= 0:
-                    game_over = True
-                    camera.draw(level_complete)
-                    camera.draw(level_complete_instructions)
-                    Level = 3
-                    have_to_make = 15
-            if Level == 3:
-                if time == 0 and bagel_score < have_to_make:
-                    game_over_function()
-                elif bagel_score >= have_to_make and time >= 0:
-                    game_over = True
-                    camera.draw(level_complete)
-                    camera.draw(level_complete_instructions)
-                    Level = 4
-                    have_to_make = 20
-            if Level == 4:
-                if time == 0 and bagel_score < have_to_make:
-                    game_over_function()
-                elif bagel_score >= have_to_make and time >= 0:
-                    game_over = True
-                    camera.draw(level_complete)
-                    camera.draw(level_complete_instructions)
-                    Level = 5
-                    have_to_make = 25
-            if Level == 5:
+                    Level += 1
+                    have_to_make += 5
+            elif Level == 7:
                 if time == 0 and bagel_score < have_to_make:
                     game_over_function()
                 elif bagel_score >= have_to_make and time >= 0:
