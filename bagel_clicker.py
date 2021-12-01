@@ -1,11 +1,5 @@
 ### TODO ####
-# 1. Add one level
-#       Random amount of bagels to make in 10 seconds, capped at ~ 20. -- This is just to start
-# 2. Create end screen with R to restart if they lose.
-# 3. Add infinite levels with increasing difficulty. Should be possible due to difficulty. 
-# 4. Have the bagel spin so that it counts as animated
-#       Using a sprite sheet it can be done, not urgent though
-# Not sure how we'll do number 3 yet TBH. Will have to try some different stuff until we have something that works. Not Urgent
+# 1. Have the bagel spin so that it counts as being animated in grading
 
 
 
