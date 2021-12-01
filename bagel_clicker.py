@@ -14,7 +14,9 @@ camera = gamebox.Camera(800, 600)
 background = gamebox.from_image(400, 300, "kitchen-background.png")
 background.size = [800, 600]
 # Bagel
-bagel = gamebox.from_image(400, 300, "bagel.png")
+bagel_sheet = gamebox.load_sprite_sheet("bagel_sheet.png", 4, 4)
+bagel_ind = 0
+bagel = gamebox.from_image(400, 300, bagel_sheet[bagel_ind])
 bagel.size = [20, 15]
 # Score
 score = gamebox.from_text(45, 15, 'Score: 0', 25, 'red', bold=True)
@@ -71,6 +73,7 @@ def tick(keys):
     global time
     global Level
     global have_to_make
+    global bagel_ind
 
     #Start screen
     if not start:
@@ -126,12 +129,22 @@ def tick(keys):
             bagel.x += bagel.speedx
             bagel.y += bagel.speedy
 
+    # Refresh Stuff
             camera.clear('black')
             camera.draw(background)
             keys.clear()
             camera.draw(gamebox.from_text(45, 15, 'Score: {}'.format(bagel_score), 25, 'red', bold=True))
             camera.draw(gamebox.from_text(750, 35, "Level: {}".format(Level), 25, "red"))
-            camera.draw(gamebox.from_text(72, 35, "Bagels needed: {}".format(have_to_make), 25, "red"))
+            camera.draw(gamebox.from_text(78, 35, "Bagels needed: {}".format(have_to_make), 25, "red"))
+
+            # Chanage bagel from sheet
+            if ticks % 3 == 0:
+                if bagel_ind == len(bagel_sheet) -1:
+                    bagel_ind = 0
+                else:
+                    bagel_ind += 1
+                bagel.image = bagel_sheet[bagel_ind]
+
             camera.draw(bagel)
             camera.draw(timer)
 
