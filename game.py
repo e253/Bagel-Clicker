@@ -69,14 +69,34 @@ import random
 
 camera = gamebox.Camera(800, 600)
 
-# Kitchen Background
-background = gamebox.from_image(400, 300, "kitchen-background.png")
-background.size = [800, 600]
+# Kitchen Backgrounds
+background1 = gamebox.from_image(400, 300, "kitchen-background-1.png")
+background1.size = [800, 600]
+
+background2 = gamebox.from_image(400, 300, "kitchen-background-2.png")
+background2.size = [800, 600]
+
+background3 = gamebox.from_image(400, 300, "kitchen-background-3.png")
+background3.size = [800, 600]
+
+background4 = gamebox.from_image(400, 300, "kitchen-background-4.png")
+background4.size = [800, 600]
+
+background5 = gamebox.from_image(400, 300, "kitchen-background-5.png")
+background5.size = [800, 600]
+
+background6 = gamebox.from_image(400, 300, "kitchen-background-6.png")
+background6.size = [800, 600]
+
+background7 = gamebox.from_image(400, 300, "kitchen-background-7.png")
+background7.size = [800, 600]
+
+background = {"b1":background1, "b2":background2, "b3":background3, "b4":background4, "b5":background5, "b6":background6, "b7":background7}
 # Bagel
 bagel_sheet = gamebox.load_sprite_sheet("bagel_sheet.png", 4, 4)
 bagel_ind = 0
 bagel = gamebox.from_image(400, 300, bagel_sheet[bagel_ind])
-bagel.size = [20, 15]
+bagel.size = [21, 16]
 # Score
 score = gamebox.from_text(45, 15, 'Score: 0', 25, 'red', bold=True)
 # Borders
@@ -146,6 +166,7 @@ def tick(keys):
     global Level
     global have_to_make
     global bagel_ind
+    global background
 
     #Start screen
     if not start:
@@ -155,6 +176,7 @@ def tick(keys):
         camera.draw(gamebox.from_text(400, 300, "Instructions:", 40, "red"))
         camera.draw(gamebox.from_text(400, 350, "Bodo's needs help finishing all their catering orders!", 20, "red"))
         camera.draw(gamebox.from_text(400, 400, "Click on the moving bagel to make a bagel, and make as many as needed before the time runs out.", 20, "red"))
+        camera.draw(gamebox.from_text(400, 450, "With each passing level the place of business will change and the task will be slightly more difficult. Good Luck!", 20, "red"))
         camera.draw(gamebox.from_text(400, 500, "Press Space to start", 50, "blue"))
         camera.display()
         if pygame.K_SPACE in keys:
@@ -165,7 +187,7 @@ def tick(keys):
         if not game_over:
             if not camera.mouseclick:
                 mouse_on = False
-                bagel.size = [20, 15]
+                bagel.size = [21-Level, 16-Level]
             if (bagel.x - 20, bagel.y - 15) < (camera.mousex, camera.mousey) < (
                 bagel.x + 20, bagel.y + 15) and camera.mouseclick and not mouse_on:
                 bagel_score += 1
@@ -202,7 +224,7 @@ def tick(keys):
 
     # Refresh Stuff
             camera.clear('black')
-            camera.draw(background)
+            camera.draw(background['b{}'.format(Level)])
             keys.clear()
             camera.draw(gamebox.from_text(45, 15, 'Score: {}'.format(bagel_score), 25, 'red', bold=True))
             camera.draw(gamebox.from_text(750, 35, "Level: {}".format(Level), 25, "red"))
