@@ -50,7 +50,7 @@ There will be a timer to make the required amount of bagels to fufill the order.
 
 # 2: Multiple Levels
 """
-As the player compeletes each order they go up a level. With each new level the game gets more difficult....
+As the player compeletes each order they go up a level. With each new level the game gets more difficult and the setting changes.
 """
 
 # 3: Restart from Game Over
